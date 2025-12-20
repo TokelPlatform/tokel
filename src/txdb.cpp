@@ -804,3 +804,4 @@ bool CBlockTreeDB::ReadUnspentCCIndex(uint160 addressHash, uint256 creationid,
     }
     return true;
 }
+

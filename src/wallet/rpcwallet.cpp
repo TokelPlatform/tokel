@@ -60,6 +60,8 @@
 
 #include <numeric>
 
+#include "main.h"
+#include "Gulden/auto_checkpoints.h"
 #include "komodo_defs.h"
 #include <string.h>
 
@@ -1862,6 +1864,11 @@ void ListTransactions(const CWalletTx& wtx, const string& strAccount, int nMinDe
 
     bool bIsCoinbase = wtx.IsCoinBase();
 
+    // If rpconlylistsecuredtransactions is present then only include if tx is secured by a checkpoint
+    bool securedTransaction = (Checkpoints::IsSecuredBySyncCheckpoint(wtx.hashBlock));
+    if (mapMultiArgs.count("-rpconlylistsecuredtransactions") && !securedTransaction)
+        return;
+
     wtx.GetAmounts(listReceived, listSent, nFee, strSentAccount, filter);
 
     bool fAllAccounts = (strAccount == string("*"));
@@ -1884,6 +1891,7 @@ void ListTransactions(const CWalletTx& wtx, const string& strAccount, int nMinDe
             if (fLong)
                 WalletTxToJSON(wtx, entry);
             entry.push_back(Pair("size", static_cast<uint64_t>(GetSerializeSize(static_cast<CTransaction>(wtx), SER_NETWORK, PROTOCOL_VERSION))));
+            entry.push_back(Pair("secured_by_checkpoint", securedTransaction ? "yes" : "no"));
             ret.push_back(entry);
         }
     }
@@ -1933,6 +1941,7 @@ void ListTransactions(const CWalletTx& wtx, const string& strAccount, int nMinDe
                 if (fLong)
                     WalletTxToJSON(wtx, entry);
                 entry.push_back(Pair("size", static_cast<uint64_t>(GetSerializeSize(static_cast<CTransaction>(wtx), SER_NETWORK, PROTOCOL_VERSION))));
+                entry.push_back(Pair("secured_by_checkpoint", securedTransaction ? "yes" : "no"));
                 ret.push_back(entry);
             }
         }

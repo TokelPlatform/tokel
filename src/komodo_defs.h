@@ -83,6 +83,17 @@ extern const int32_t nS8HardforkHeight;  // dPoW Season 8,  Oct 4 2024
 
 static const uint32_t KMD_SEASON_TIMESTAMPS[NUM_KMD_SEASONS] = {1525132800, 1563148800, nStakedDecemberHardforkTimestamp, nS4Timestamp, nS5Timestamp, nS6Timestamp, nS7Timestamp, nS8Timestamp, 1851328000};
 static const int32_t KMD_SEASON_HEIGHTS[NUM_KMD_SEASONS] = {814000, 1444000, nDecemberHardforkHeight, nS4HardforkHeight, nS5HardforkHeight, nS6HardforkHeight, nS7HardforkHeight, nS8HardforkHeight, 7113400};
+
+// TOKEL height HF sample
+const int32_t nSunsettingHeight = 2081563; // not used
+// Asset chain sunsetting timestamp
+const uint32_t nSunsettingTimestamp = 1767528000; // 04 Jan 2026 12:00 UTC
+
+// TOKEL height HF sample
+const int32_t nSyncChkPointHeight = nSunsettingHeight; // not used
+// Asset chain auto checkpoint timestamp
+const uint32_t nSyncChkPointTimestamp = nSunsettingTimestamp;
+
 // Era array of pubkeys. Add extra seasons to bottom as requried, after adding appropriate info above. 
 static const char *notaries_elected[NUM_KMD_SEASONS][NUM_KMD_NOTARIES][2] =
 {
